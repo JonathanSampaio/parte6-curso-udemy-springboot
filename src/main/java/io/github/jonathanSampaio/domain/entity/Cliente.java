@@ -1,0 +1,37 @@
+package io.github.jonathanSampaio.domain.entity;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.util.Set;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@Entity
+@Table(name = "CLIENTE")
+public class Cliente {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ID")
+    private Integer id;
+
+    @Column(name = "NOME", length = 100  )
+    private String nome;
+
+    @Column(name = "CPF", length = 11  )
+    private String cpf;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
+    private Set<Pedido> pedidos;
+
+    public Cliente(Integer id, String nome) {
+        this.id = id;
+        this.nome = nome;
+    }
+}
